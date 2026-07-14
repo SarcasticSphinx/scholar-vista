@@ -1,6 +1,6 @@
-# Next.js Boilerplate with Better-Auth Enhanced
+# ScholarVista
 
-A robust, production-ready boilerplate for building modern web applications with Next.js 16, Better-Auth, Prisma, and Tailwind CSS.
+ScholarVista is a full-stack scholarship management platform built on top of a Next.js 16 boilerplate that ships with Better-Auth, Prisma, and Tailwind CSS.
 
 ## Features
 
@@ -137,3 +137,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License.
+# scholar-vista
