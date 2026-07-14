@@ -33,14 +33,16 @@
 
 // Prisma 7 requires the driver adapter for PostgreSQL.
 import "dotenv/config";
+import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/generated/prisma/client";
 import { env } from "@/lib/env";
 
-// Create the driver adapter using the validated, pooled NeonDB connection
-// string. Keeping this at module scope means Prisma 7's required adapter is
-// constructed exactly once per process.
-const adapter = new PrismaPg({ connectionString: env.DATABASE_URL });
+// Create a `pg` Pool and hand it to the Prisma adapter. Using an explicit
+// Pool avoids the Turbopack/edge-compatibility issues that arise when
+// PrismaPg internally tries to require `pg` at runtime.
+const pool = new Pool({ connectionString: env.DATABASE_URL });
+const adapter = new PrismaPg(pool);
 
 // Cache the client (and a flag for the shutdown hook) on `globalThis` so dev
 // HMR doesn't leak connections and we don't register the disconnect listener
