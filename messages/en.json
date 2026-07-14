@@ -1,0 +1,39 @@
+{
+    "app": {
+        "brand": "ScholarVista",
+        "tagline": "Discover, compare, and apply for scholarships"
+    },
+    "nav": {
+        "home": "Home",
+        "scholarships": "Scholarships",
+        "universities": "Universities",
+        "compare": "Compare",
+        "guide": "Guide",
+        "help": "Help",
+        "signin": "Sign in",
+        "profile": "Profile",
+        "dashboard": "Dashboard"
+    },
+    "common": {
+        "loading": "Loading…",
+        "error": "Something went wrong.",
+        "retry": "Retry",
+        "save": "Save",
+        "cancel": "Cancel",
+        "submit": "Submit",
+        "search": "Search"
+    },
+    "errors": {
+        "notFound": "The page or resource you requested was not found.",
+        "unauthorized": "You need to sign in to continue.",
+        "forbidden": "You don't have permission to access this resource.",
+        "generic": "An unexpected error occurred. Please try again."
+    },
+    "scholarship": {
+        "applyNow": "Apply now",
+        "bookmark": "Bookmark",
+        "compare": "Compare",
+        "deadline": "Deadline",
+        "stipend": "Stipend"
+    }
+}

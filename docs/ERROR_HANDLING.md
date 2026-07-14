@@ -1,6 +1,7 @@
+
 # Error Handling Guide
 
-Simple error handling patterns for the HomeX CRM project.
+Simple error handling patterns for the ScholarVista project.
 
 ---
 

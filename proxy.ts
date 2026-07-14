@@ -2,47 +2,87 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 /**
- * Next.js 16 Proxy
+ * Next.js 16 Proxy — route gating for ScholarVista.
  *
- * The proxy runs before routes are rendered and is used for:
- * - Authentication checks (optimistic, cookie-based)
- * - Redirects and rewrites
- * - Modifying request/response headers
+ * Protects authenticated routes by checking for the Better Auth session
+ * cookie. Unauthenticated requests are redirected to `/sign-in` with a
+ * `returnUrl` query param so the sign-in page can bounce the user back
+ * after a successful login.
  *
- * Note: Proxy defaults to Node.js runtime in Next.js 16
- * Avoid database queries here - use optimistic checks only
+ * Protected path patterns (Req 3.6, 3.9, 3.11, 8.5):
+ *   /profile
+ *   /change-password
+ *   /my-applications, /my-bookmarks, /my-reviews
+ *   /notifications
+ *   /scholarships/:id/apply
+ *   /scholarships/new
+ *   /dashboard (and all sub-paths)
+ *
+ * The proxy also passes the current pathname as `x-pathname` header so
+ * server layouts can read it without importing `next/headers` in edge
+ * contexts.
+ *
+ * Validates: Requirements 3.6, 3.9, 3.11, 8.5.
  */
 
-// Protected routes that require authentication
-const protectedRoutes = ["/admin", "/operator"];
+/** Cookie names used by Better Auth for the session token. */
+const SESSION_COOKIE_NAMES = [
+    "better-auth.session_token",
+    "__Secure-better-auth.session_token",
+];
+
+/**
+ * Paths that require an authenticated session. Checked via
+ * `pathname.startsWith(prefix)` so sub-paths are covered automatically.
+ */
+const PROTECTED_PREFIXES = [
+    "/profile",
+    "/change-password",
+    "/my-applications",
+    "/my-bookmarks",
+    "/my-reviews",
+    "/notifications",
+    "/scholarships/new",
+    "/dashboard",
+];
+
+/**
+ * Exact-match patterns for dynamic protected routes that can't be covered
+ * by a simple prefix (e.g. `/scholarships/:id/apply`).
+ */
+const PROTECTED_PATTERNS = [
+    /^\/scholarships\/[^/]+\/apply(\/.*)?$/,
+];
+
+/** Return `true` when the request carries a Better Auth session cookie. */
+function hasSessionCookie(req: NextRequest): boolean {
+    return SESSION_COOKIE_NAMES.some((name) => req.cookies.has(name));
+}
+
+/** Return `true` when the pathname requires authentication. */
+function isProtectedPath(pathname: string): boolean {
+    if (PROTECTED_PREFIXES.some((prefix) => pathname.startsWith(prefix))) {
+        return true;
+    }
+    return PROTECTED_PATTERNS.some((pattern) => pattern.test(pathname));
+}
 
 export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    // Get session token from cookies (optimistic check)
-    const sessionToken = request.cookies.get("better-auth.session_token")?.value;
-
-    // Check if accessing a protected route
-    const isProtectedRoute = protectedRoutes.some((route) =>
-        pathname.startsWith(route)
-    );
-
-    // If no session and trying to access protected routes, redirect to signin
-    if (!sessionToken && isProtectedRoute) {
-        const signInUrl = new URL("/signin", request.url);
-        signInUrl.searchParams.set("callbackUrl", pathname);
-        return NextResponse.redirect(signInUrl);
-    }
-
-    // For role-based checks, we pass the pathname to the layout
-    // The layout can then perform database checks for authorization
+    // Pass the pathname to server layouts via a request header.
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set("x-pathname", pathname);
 
+    // Gate protected routes behind session presence.
+    if (isProtectedPath(pathname) && !hasSessionCookie(request)) {
+        const signInUrl = new URL("/sign-in", request.url);
+        signInUrl.searchParams.set("returnUrl", pathname);
+        return NextResponse.redirect(signInUrl);
+    }
+
     return NextResponse.next({
-        request: {
-            headers: requestHeaders,
-        },
+        request: { headers: requestHeaders },
     });
 }
 

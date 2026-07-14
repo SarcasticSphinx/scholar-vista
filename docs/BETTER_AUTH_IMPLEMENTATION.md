@@ -1,6 +1,6 @@
-# Better Auth Implementation - HomeX CRM
+# Better Auth Implementation - ScholarVista
 
-A comprehensive guide to the Better Auth implementation in the HomeX CRM real estate management application.
+A comprehensive guide to the Better Auth implementation in the ScholarVista scholarship management application.
 
 ## Overview
 
@@ -17,7 +17,7 @@ This implementation uses **Better Auth** for authentication with the following k
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                    HOMEX CRM AUTHENTICATION FLOW                         │
+│                    SCHOLARVISTA AUTHENTICATION FLOW                      │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                                                                         │
 │  1. ADMIN SEEDING (Initial Setup)                                       │
@@ -274,7 +274,7 @@ const hash = await ctx.password.hash('newpassword');
 
 After running the seed script:
 
-- **Email:** admin@homex.com
+- **Email:** admin@scholarvista.com
 - **Password:** Admin123!
 
 Run the seed:
@@ -288,7 +288,7 @@ npx prisma db seed
 
 1. **Start the dev server:** `npm run dev`
 2. **Navigate to:** `http://localhost:3000/signin`
-3. **Sign in as admin:** admin@homex.com / Admin123!
+3. **Sign in as admin:** admin@scholarvista.com / Admin123!
 4. **Create an agent:** Go to /admin/team → Add Agent
 5. **Test agent login:** Sign out, sign in with agent credentials
 6. **Verify password change modal appears**

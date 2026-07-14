@@ -1,3 +1,4 @@
+// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -7,55 +8,110 @@ datasource db {
   provider = "postgresql"
 }
 
-// ============================================================
-// ENUMS
-// ============================================================
+// ---------- Enums ----------
 
 enum UserRole {
   ADMIN
+  MODERATOR
   USER
 }
 
-// ============================================================
-// USER & AUTHENTICATION
-// ============================================================
+enum ScholarshipCategory {
+  UNDERGRADUATE
+  MASTERS
+  PHD
+  POSTDOC
+  EXCHANGE
+  SHORT_COURSE
+}
+
+enum UniversityType {
+  PUBLIC
+  PRIVATE
+  COMMUNITY
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum ApplyingDegree {
+  UNDERGRADUATE
+  MASTERS
+  PHD
+  POSTDOC
+}
+
+enum ApplicationStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  REJECTED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+  REFUNDED
+  FAILED
+  EXPIRED
+}
+
+enum NotificationType {
+  APPLICATION_STATUS_CHANGE
+  SCHOLARSHIP_APPROVED
+  PAYMENT_CONFIRMED
+}
+
+// ---------- Better Auth core (extended) ----------
 
 model User {
-  id            String   @id @default(cuid())
-  name          String
-  email         String   @unique
-  emailVerified Boolean  @default(false)
-  image         String?
-  role          UserRole @default(USER)
-  phone         String?
-  password      String?
+  id               String    @id @default(cuid())
+  email            String    @unique
+  emailVerified    Boolean   @default(false)
+  name             String
+  image            String?
+  // Extensions for ScholarVista
+  role             UserRole  @default(USER)
+  profilePicture   String?
+  educationalLevel String?
+  major            String?
+  country          String?
+  city             String?
+  dateOfBirth      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  sessions           Session[]
+  accounts           Account[]
+  postedScholarships Scholarship[]  @relation("PostedBy")
+  applications       Application[]
+  reviews            Review[]
+  bookmarks          Bookmark[]
+  payments           Payment[]
+  notifications      Notification[]
 
-  // Better Auth Relations
-  sessions Session[]
-  accounts Account[]
-
-  @@map("user")
+  @@index([role])
 }
 
 model Session {
-  id        String   @id @default(cuid())
+  id        String   @id
   userId    String
-  token     String   @unique
   expiresAt DateTime
+  token     String   @unique
   ipAddress String?
   userAgent String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("session")
+  @@index([userId])
 }
 
 model Account {
-  id                    String    @id @default(cuid())
+  id                    String    @id
   userId                String
   accountId             String
   providerId            String
@@ -71,16 +127,170 @@ model Account {
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([providerId, accountId])
-  @@map("account")
+  @@index([userId])
 }
 
 model Verification {
-  id         String   @id @default(cuid())
+  id         String   @id
   identifier String
   value      String
   expiresAt  DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  @@map("verification")
+  @@index([identifier])
+}
+
+// ---------- Domain models ----------
+
+model University {
+  id                    String         @id @default(cuid())
+  name                  String         @db.VarChar(200)
+  logo                  String?
+  contactEmail          String         @db.VarChar(254)
+  website               String         @db.VarChar(500)
+  description           String         @db.VarChar(3000)
+  address               String         @db.VarChar(300)
+  country               String         @db.VarChar(100)
+  city                  String         @db.VarChar(100)
+  worldRank             Int
+  type                  UniversityType
+  establishedYear       Int
+  isPartner             Boolean        @default(false)
+  acceptingApplications Boolean        @default(true)
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  scholarships Scholarship[]
+
+  @@index([country])
+  @@index([isPartner])
+  @@index([name])
+}
+
+model Scholarship {
+  id              String              @id @default(cuid())
+  title           String              @db.VarChar(200)
+  universityId    String
+  university      University          @relation(fields: [universityId], references: [id], onDelete: Restrict)
+  category        ScholarshipCategory
+  subject         String              @db.VarChar(100)
+  description     String              @db.VarChar(5000)
+  stipend         Decimal             @db.Decimal(11, 2)
+  coverage        String              @db.VarChar(500)
+  location        String              @db.VarChar(200)
+  requirements    String              @db.VarChar(3000)
+  deadline        DateTime
+  applicationLink String              @db.VarChar(500)
+  fees            Decimal             @db.Decimal(8, 2)
+  image           String?
+  isApproved      Boolean             @default(false)
+  postedById      String
+  postedBy        User                @relation("PostedBy", fields: [postedById], references: [id], onDelete: Cascade)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  applications Application[]
+  reviews      Review[]
+  bookmarks    Bookmark[]
+  payments     Payment[]
+
+  @@index([universityId])
+  @@index([category])
+  @@index([deadline])
+  @@index([isApproved, createdAt])
+  @@index([postedById])
+}
+
+model Application {
+  id              String            @id @default(cuid())
+  userId          String
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scholarshipId   String
+  scholarship     Scholarship       @relation(fields: [scholarshipId], references: [id], onDelete: Cascade)
+  applicantName   String            @db.VarChar(150)
+  phone           String            @db.VarChar(20)
+  gender          Gender
+  applyingDegree  ApplyingDegree
+  sscResult       String            @db.VarChar(20)
+  hscResult       String            @db.VarChar(20)
+  subjectCategory String            @db.VarChar(100)
+  village         String            @db.VarChar(200)
+  district        String            @db.VarChar(100)
+  country         String            @db.VarChar(100)
+  status          ApplicationStatus @default(PENDING)
+  paymentStatus   PaymentStatus     @default(UNPAID)
+  feedback        String?           @db.VarChar(1000)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@unique([userId, scholarshipId])
+  @@index([scholarshipId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Review {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scholarshipId String
+  scholarship   Scholarship @relation(fields: [scholarshipId], references: [id], onDelete: Cascade)
+  ratingPoint   Int // 1..5 enforced in app + CHECK constraint via raw migration
+  comment       String      @db.VarChar(2000)
+  createdAt     DateTime    @default(now())
+
+  @@unique([userId, scholarshipId])
+  @@index([scholarshipId])
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scholarshipId String
+  scholarship   Scholarship   @relation(fields: [scholarshipId], references: [id], onDelete: Cascade)
+  applicationId String?       @unique
+  amount        Decimal       @db.Decimal(8, 2)
+  transactionId String        @unique @db.VarChar(100)
+  paymentStatus PaymentStatus
+  expiresAt     DateTime?
+  createdAt     DateTime      @default(now())
+
+  @@index([userId])
+  @@index([scholarshipId])
+}
+
+model Notification {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message         String           @db.VarChar(500)
+  type            NotificationType
+  isRead          Boolean          @default(false)
+  relatedEntityId String?
+  createdAt       DateTime         @default(now())
+
+  @@index([userId, isRead, createdAt])
+}
+
+model Bookmark {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scholarshipId String
+  scholarship   Scholarship @relation(fields: [scholarshipId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+
+  @@unique([userId, scholarshipId])
+  @@index([userId])
+}
+
+model PlatformSettings {
+  id                          String   @id @default("singleton")
+  platformName                String   @db.VarChar(100)
+  platformDescription         String   @db.VarChar(500)
+  featureUserSubmittedEnabled Boolean  @default(true)
+  featurePaymentEnabled       Boolean  @default(true)
+  updatedAt                   DateTime @updatedAt
 }

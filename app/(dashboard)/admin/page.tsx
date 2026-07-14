@@ -1,5 +1,5 @@
-export const page = () => {
+export default function AdminPage() {
   return (
     <div>Admin Panel</div>
-  )
+  );
 }

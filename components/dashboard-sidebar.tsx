@@ -50,7 +50,7 @@ export function DashboardSidebar({ items, user }: DashboardSidebarProps) {
     try {
       await authClient.signOut();
       toast.success("Signed out successfully");
-      router.push("/signin");
+      router.push("/sign-in");
     } catch (error) {
       console.error("Sign out error:", error);
       toast.error("Failed to sign out");
@@ -69,7 +69,7 @@ export function DashboardSidebar({ items, user }: DashboardSidebarProps) {
                 <div className="hidden group-data-[collapsible=icon]:block aspect-square w-6 h-6 relative mx-auto">
                   <Image
                     src="/logo-icon.png"
-                    alt="HomeX"
+                    alt="ScholarVista"
                     fill
                     className="object-contain"
                     sizes="24px"
@@ -80,7 +80,7 @@ export function DashboardSidebar({ items, user }: DashboardSidebarProps) {
                 <div className="group-data-[collapsible=icon]:hidden flex items-center h-6 relative w-24 min-w-0">
                   <Image
                     src="/logo-full.png"
-                    alt="HomeX CRM"
+                    alt="ScholarVista"
                     fill
                     className="object-contain"
                     sizes="128px"

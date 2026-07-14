@@ -1,49 +1,54 @@
-"use client";
+/**
+ * Root custom 404 page.
+ *
+ * Rendered by Next.js for unmatched routes and for any `notFound()` call
+ * (e.g. a missing or unapproved scholarship/university detail page). This is
+ * a Server Component — it ships no client JS and simply presents a message
+ * and a link back to the home page.
+ *
+ * Validates: Requirement 28.1 (custom 404 with not-found message + home link).
+ */
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Home, SearchX } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-import { Home, ArrowLeft, SearchX } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function NotFound() {
-  const router = useRouter();
-
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4">
-      <div className="text-center max-w-md space-y-6">
-        {/* Icon */}
-        <div className="flex justify-center">
-          <div className="rounded-full bg-gray-100 p-6">
-            <SearchX className="w-16 h-16 text-gray-400" />
+    <section
+      role="alert"
+      className="mx-auto flex max-w-2xl flex-col items-center justify-center px-4 py-24 text-center sm:px-6 lg:px-8"
+    >
+      <Card className="w-full">
+        <CardContent className="flex flex-col items-center gap-5 p-8 sm:p-10">
+          <span
+            aria-hidden="true"
+            className="flex size-14 items-center justify-center rounded-full bg-muted text-muted-foreground"
+          >
+            <SearchX className="size-7" />
+          </span>
+
+          <div className="space-y-2">
+            <p className="text-5xl font-bold tracking-tight">404</p>
+            <h1 className="text-2xl font-semibold tracking-tight">
+              Page not found
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              The page you&apos;re looking for doesn&apos;t exist or has
+              been moved. Check the address or head back to the home page.
+            </p>
           </div>
-        </div>
 
-        {/* Content */}
-        <div className="space-y-2">
-          <h1 className="text-6xl font-bold text-gray-900">404</h1>
-          <h2 className="text-2xl font-semibold text-gray-900">
-            Page not found
-          </h2>
-          <p className="text-gray-600">
-            The page you&apos;re looking for doesn&apos;t exist or has been
-            moved.
-          </p>
-        </div>
-
-        {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-          <Button asChild>
+          <Button asChild size="lg">
             <Link href="/">
-              <Home className="w-4 h-4 mr-2" />
+              <Home aria-hidden="true" className="size-4" />
               Go home
             </Link>
           </Button>
-          <Button variant="outline" onClick={() => router.back()}>
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Go back
-          </Button>
-        </div>
-      </div>
-    </div>
+        </CardContent>
+      </Card>
+    </section>
   );
 }
