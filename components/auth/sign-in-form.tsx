@@ -1,22 +1,5 @@
 "use client";
 
-/**
- * Sign-in form (client).
- *
- * React Hook Form + Zod (`SignInSchema`) on top of the Better Auth client
- * SDK. Calls `authClient.signIn.email` for credentials sign-in and
- * `authClient.signIn.social({ provider: 'google' })` for the Google OAuth
- * flow. After a successful credentials sign-in the user is navigated to
- * the page given in the `?returnUrl=` search param (or `/` when no
- * return URL is present).
- *
- * On any failure the form shows a single generic error message ("Invalid
- * email or password") so we never reveal whether the email is registered
- * (Req 3.4).
- *
- * Validates: Requirements 3.1, 3.2, 3.4, 3.8
- */
-
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";

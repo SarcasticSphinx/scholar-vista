@@ -38,11 +38,9 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { isNavLinkActive, type NavLink } from "@/components/layout/nav-links";
 
-export type NavLink = {
-    href: string;
-    label: string;
-};
+export type { NavLink };
 
 interface MobileMenuProps {
     links: NavLink[];
@@ -101,10 +99,7 @@ export function MobileMenu({
                         className="flex flex-col px-2 py-3"
                     >
                         {links.map((link) => {
-                            const isActive =
-                                pathname === link.href ||
-                                (link.href !== "/" &&
-                                    pathname.startsWith(link.href + "/"));
+                            const isActive = isNavLinkActive(pathname, link.href);
                             return (
                                 <Link
                                     key={link.href}

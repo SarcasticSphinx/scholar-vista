@@ -27,6 +27,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Trash2, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -47,7 +48,12 @@ export interface ComparisonTrayProps {
 }
 
 export function ComparisonTray({ className }: ComparisonTrayProps) {
-    const { items, remove, clear, count } = useComparison();
+    const pathname = usePathname();
+    const { items, remove, clear, count, hydrated } = useComparison();
+
+    // The compare page already lists the selection — hide the floating tray
+    // there so it doesn't stack on top of the same content.
+    if (!hydrated || pathname === "/compare") return null;
 
     // Below the minimum the tray is fully hidden — render nothing rather
     // than an empty container so it doesn't trap focus or take up space.

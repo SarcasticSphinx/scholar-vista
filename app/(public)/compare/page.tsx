@@ -5,16 +5,13 @@
  *
  * Hydrates the cart from `localStorage` via {@link useComparison} and, once
  * hydration completes, fetches the matching scholarships through the
- * `getCompareScholarships` Server Action. The page renders a side-by-side
- * table with a row for each comparison attribute (title, university,
- * stipend, coverage, deadline, category, requirements, rating) and a
- * column per scholarship. Missing values render as the literal `"-"`
- * (Req 15.6, 15.7).
+ * `getCompareScholarships` Server Action. The page renders:
+ *   - A list of currently selected scholarships (with remove controls)
+ *   - A side-by-side table once at least {@link MIN_COMPARE} are selected
  *
- * Empty / under-minimum state:
- *   When fewer than {@link MIN_COMPARE} items are in the cart the page
- *   shows an `EmptyState` with a CTA back to `/scholarships` so the user
- *   knows how to populate the cart.
+ * Empty state:
+ *   When the cart is empty the page shows an `EmptyState` with a CTA back
+ *   to `/scholarships` so the user knows how to populate the cart.
  *
  * Note: this is a Client Component because the cart lives in
  * `localStorage`. The data fetch runs through a Server Action so the
@@ -25,7 +22,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Scale } from "lucide-react";
+import { Scale, X } from "lucide-react";
 
 import { getCompareScholarships } from "@/actions/scholarship";
 import {
@@ -37,8 +34,10 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/shared/empty-state";
 import {
+    MAX_COMPARE,
     MIN_COMPARE,
     useComparison,
     type ComparisonItem,
@@ -178,6 +177,79 @@ function ComparisonTableSkeleton({ columnCount }: { columnCount: number }) {
 }
 
 /**
+ * List of scholarships currently in the comparison cart, with remove
+ * controls so the user can trim the selection without leaving the page.
+ */
+function SelectedScholarships({
+    items,
+    onRemove,
+    onClear,
+}: {
+    items: ComparisonItem[];
+    onRemove: (id: string) => void;
+    onClear: () => void;
+}) {
+    return (
+        <div className="mb-8 space-y-3">
+            <div className="flex items-center justify-between gap-3">
+                <h2 className="text-lg font-semibold tracking-tight">
+                    Selected for comparison
+                    <span className="ml-2 text-sm font-normal text-muted-foreground">
+                        {items.length} of {MAX_COMPARE}
+                    </span>
+                </h2>
+                {items.length > 0 ? (
+                    <Button type="button" variant="ghost" size="sm" onClick={onClear}>
+                        Clear all
+                    </Button>
+                ) : null}
+            </div>
+
+            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {items.map((item) => (
+                    <li
+                        key={item.id}
+                        className="flex items-start justify-between gap-3 rounded-lg border bg-card px-4 py-3"
+                    >
+                        <div className="min-w-0">
+                            <Link
+                                href={`/scholarships/${item.id}`}
+                                className="block truncate text-sm font-medium hover:underline"
+                            >
+                                {item.title}
+                            </Link>
+                            <p className="truncate text-xs text-muted-foreground">
+                                {item.universityName}
+                            </p>
+                        </div>
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => onRemove(item.id)}
+                            aria-label={`Remove ${item.title} from comparison`}
+                        >
+                            <X className="size-4" aria-hidden />
+                        </Button>
+                    </li>
+                ))}
+            </ul>
+
+            {items.length > 0 && items.length < MIN_COMPARE ? (
+                <p className="text-sm text-muted-foreground">
+                    Add {MIN_COMPARE - items.length} more scholarship
+                    {MIN_COMPARE - items.length === 1 ? "" : "s"} to see the
+                    side-by-side comparison.{" "}
+                    <Link href="/scholarships" className="underline underline-offset-2">
+                        Browse scholarships
+                    </Link>
+                </p>
+            ) : null}
+        </div>
+    );
+}
+
+/**
  * Render the comparison page proper. Split out so the top-level component
  * can early-return for empty / loading states without nesting JSX deeply.
  */
@@ -256,15 +328,7 @@ function ComparisonTable({
 }
 
 export default function ComparePage() {
-    const { items, count } = useComparison();
-
-    // Track hydration explicitly so the "fewer than 2 items" empty state
-    // doesn't flash on first paint while the cart is still being read
-    // from localStorage.
-    const [hydrated, setHydrated] = React.useState(false);
-    React.useEffect(() => {
-        setHydrated(true);
-    }, []);
+    const { items, count, remove, clear, hydrated } = useComparison();
 
     const [scholarships, setScholarships] = React.useState<ScholarshipDetailDTO[]>(
         [],
@@ -337,24 +401,34 @@ export default function ComparePage() {
 
             {!hydrated ? (
                 <ComparisonTableSkeleton columnCount={2} />
-            ) : count < MIN_COMPARE ? (
+            ) : count === 0 ? (
                 <EmptyState
                     icon={Scale}
                     title="Add scholarships to compare"
                     description={`Select at least ${MIN_COMPARE} scholarships from the catalog to compare them side by side.`}
                     action={{ label: "Browse scholarships", href: "/scholarships" }}
                 />
-            ) : loading ? (
-                <ComparisonTableSkeleton columnCount={count} />
-            ) : errorMessage ? (
-                <EmptyState
-                    icon={Scale}
-                    title="Couldn't load comparison"
-                    description={errorMessage}
-                    action={{ label: "Browse scholarships", href: "/scholarships" }}
-                />
             ) : (
-                <ComparisonTable cartItems={items} scholarships={scholarships} />
+                <>
+                    <SelectedScholarships
+                        items={items}
+                        onRemove={remove}
+                        onClear={clear}
+                    />
+
+                    {count < MIN_COMPARE ? null : loading ? (
+                        <ComparisonTableSkeleton columnCount={count} />
+                    ) : errorMessage ? (
+                        <EmptyState
+                            icon={Scale}
+                            title="Couldn't load comparison"
+                            description={errorMessage}
+                            action={{ label: "Browse scholarships", href: "/scholarships" }}
+                        />
+                    ) : (
+                        <ComparisonTable cartItems={items} scholarships={scholarships} />
+                    )}
+                </>
             )}
         </section>
     );

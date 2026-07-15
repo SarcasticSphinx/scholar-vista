@@ -9,7 +9,11 @@
  * reloads, and is rehydrated lazily on the client to avoid hydration
  * mismatches against the server-rendered HTML.
  *
- * Invariants enforced by the hook:
+ * State lives in a module-level store (not per-component `useState`) so
+ * every `CompareButton`, the floating tray, and the `/compare` page stay
+ * in sync when the cart changes.
+ *
+ * Invariants enforced by the store:
  *   - At most {@link MAX_COMPARE} items at any time (Req 15.1, 15.2).
  *   - No duplicate items by `id` (set semantics keyed on scholarshipId).
  *   - Persistence round-trips identity: the items returned after a reload
@@ -30,6 +34,7 @@
  */
 
 import * as React from "react";
+import { useSyncExternalStore } from "react";
 
 /** Minimum number of scholarships required to launch a comparison. */
 export const MIN_COMPARE = 2;
@@ -66,6 +71,11 @@ export interface UseComparisonResult {
   has: (scholarshipId: string) => boolean;
   /** Number of items currently in the cart. */
   count: number;
+  /**
+   * False until the client has read `localStorage`. Use this to avoid
+   * flashing empty-state UI before the persisted cart is available.
+   */
+  hydrated: boolean;
 }
 
 /**
@@ -124,59 +134,119 @@ function writeToStorage(items: ComparisonItem[]): void {
   }
 }
 
+/* ------------------------------------------------------------------ */
+/*                         module-level store                          */
+/* ------------------------------------------------------------------ */
+
+type Listener = () => void;
+
+let itemsState: ComparisonItem[] = [];
+let hydratedState = false;
+const listeners = new Set<Listener>();
+
+function emit(): void {
+  for (const listener of listeners) listener();
+}
+
+function setItems(next: ComparisonItem[]): void {
+  itemsState = next;
+  writeToStorage(next);
+  emit();
+}
+
+function hydrateOnce(): void {
+  if (hydratedState || typeof window === "undefined") return;
+  itemsState = readFromStorage();
+  hydratedState = true;
+  emit();
+}
+
+function subscribe(listener: Listener): () => void {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+function getItemsSnapshot(): ComparisonItem[] {
+  return itemsState;
+}
+
+function getHydratedSnapshot(): boolean {
+  return hydratedState;
+}
+
+function getServerItemsSnapshot(): ComparisonItem[] {
+  return EMPTY_ITEMS;
+}
+
+function getServerHydratedSnapshot(): boolean {
+  return false;
+}
+
+const EMPTY_ITEMS: ComparisonItem[] = [];
+
+function addItem(item: ComparisonItem): void {
+  hydrateOnce();
+  if (itemsState.some((p) => p.id === item.id)) return;
+  if (itemsState.length >= MAX_COMPARE) return;
+  setItems([
+    ...itemsState,
+    {
+      id: item.id,
+      title: item.title,
+      universityName: item.universityName,
+    },
+  ]);
+}
+
+function removeItem(scholarshipId: string): void {
+  hydrateOnce();
+  if (!itemsState.some((p) => p.id === scholarshipId)) return;
+  setItems(itemsState.filter((p) => p.id !== scholarshipId));
+}
+
+function clearItems(): void {
+  hydrateOnce();
+  if (itemsState.length === 0) return;
+  setItems([]);
+}
+
 /**
  * React hook returning the current comparison cart along with mutators.
  *
- * The hook initialises with an empty array on both server and client to
- * keep the SSR HTML deterministic, then rehydrates from localStorage in
- * a mount effect. Subsequent mutations update both in-memory state and
- * the persisted entry in the same render cycle so listeners cannot
- * observe divergence.
+ * Backed by a shared module store so every consumer observes the same cart.
+ * SSR and the first client paint use an empty cart; hydration from
+ * `localStorage` lands in a follow-up commit via `useSyncExternalStore`.
  */
 export function useComparison(): UseComparisonResult {
-  const [items, setItems] = React.useState<ComparisonItem[]>([]);
-  const [hydrated, setHydrated] = React.useState(false);
+  const items = useSyncExternalStore(
+    subscribe,
+    getItemsSnapshot,
+    getServerItemsSnapshot,
+  );
+  const hydrated = useSyncExternalStore(
+    subscribe,
+    getHydratedSnapshot,
+    getServerHydratedSnapshot,
+  );
 
-  // Lazy hydration on mount avoids SSR/CSR mismatches; the first paint
-  // matches the server (empty cart) and the persisted state is applied
-  // in a follow-up commit.
+  // Lazy hydration after mount keeps the first client paint aligned with
+  // the SSR HTML (empty cart), then applies the persisted cart.
   React.useEffect(() => {
-    setItems(readFromStorage());
-    setHydrated(true);
+    hydrateOnce();
   }, []);
 
-  // Persist on every change after hydration. Skipping the pre-hydration
-  // pass prevents the initial empty array from clobbering the stored
-  // value before we've had a chance to read it.
-  React.useEffect(() => {
-    if (!hydrated) return;
-    writeToStorage(items);
-  }, [items, hydrated]);
-
   const add = React.useCallback((item: ComparisonItem) => {
-    setItems((prev) => {
-      if (prev.some((p) => p.id === item.id)) return prev;
-      if (prev.length >= MAX_COMPARE) return prev;
-      return [
-        ...prev,
-        {
-          id: item.id,
-          title: item.title,
-          universityName: item.universityName,
-        },
-      ];
-    });
+    addItem(item);
   }, []);
 
   const remove = React.useCallback((scholarshipId: string) => {
-    setItems((prev) => {
-      if (!prev.some((p) => p.id === scholarshipId)) return prev;
-      return prev.filter((p) => p.id !== scholarshipId);
-    });
+    removeItem(scholarshipId);
   }, []);
 
   const clear = React.useCallback(() => {
-    setItems([]);
+    clearItems();
   }, []);
 
   const has = React.useCallback(
@@ -192,5 +262,6 @@ export function useComparison(): UseComparisonResult {
     isFull: items.length >= MAX_COMPARE,
     has,
     count: items.length,
+    hydrated,
   };
 }

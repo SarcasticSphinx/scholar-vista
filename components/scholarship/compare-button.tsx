@@ -1,21 +1,5 @@
 "use client";
 
-/**
- * Client island that toggles a scholarship in the comparison cart.
- *
- * Backed by the `useComparison` hook (task 9.1). When the scholarship is
- * already in the cart, clicking removes it; otherwise it is added. The
- * button is disabled when the cart is full (Req 15.1, 15.2) and the
- * scholarship isn't already a member, so users get visual feedback before
- * clicking.
- *
- * The button accepts a single `scholarship` payload that mirrors the cart
- * entry shape — keeping the public API compact and keying the cart by
- * `id` while still surfacing `title` and `universityName` in the tray.
- *
- * Validates: Requirements 4.6, 5.9 (compare control on card).
- */
-
 import * as React from "react";
 import { Plus, Check } from "lucide-react";
 

@@ -26,7 +26,8 @@ import { getOptionalSession } from "@/lib/rbac";
 import { getUnreadCount } from "@/lib/queries/notification";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { MobileMenu, type NavLink } from "@/components/layout/mobile-menu";
+import { MobileMenu } from "@/components/layout/mobile-menu";
+import { NavLinks, type NavLink } from "@/components/layout/nav-links";
 import { NotificationBell } from "@/components/layout/notification-bell";
 import { UserMenu } from "@/components/layout/user-menu";
 
@@ -80,18 +81,7 @@ export async function Navbar() {
                     </Link>
 
                     {/* Desktop links — hidden below md */}
-                    <ul className="hidden items-center gap-1 md:flex">
-                        {PRIMARY_LINKS.map((link) => (
-                            <li key={link.href}>
-                                <Link
-                                    href={link.href}
-                                    className="rounded-md px-3 py-2 text-sm font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                                >
-                                    {link.label}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
+                    <NavLinks links={PRIMARY_LINKS} />
                 </div>
 
                 {/* Right side */}

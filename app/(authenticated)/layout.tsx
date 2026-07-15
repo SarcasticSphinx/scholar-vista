@@ -4,6 +4,7 @@ import { requireSession } from "@/lib/rbac";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SkipToContent } from "@/components/layout/skip-to-content";
+import { ComparisonTray } from "@/components/scholarship/comparison-tray";
 
 /**
  * Authenticated route group layout.
@@ -45,6 +46,7 @@ export default async function AuthenticatedLayout({
                 {children}
             </main>
             <Footer />
+            <ComparisonTray />
         </div>
     );
 }

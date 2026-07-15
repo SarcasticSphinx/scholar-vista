@@ -16,6 +16,7 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SkipToContent } from "@/components/layout/skip-to-content";
+import { ComparisonTray } from "@/components/scholarship/comparison-tray";
 
 export default function PublicLayout({
     children,
@@ -30,6 +31,7 @@ export default function PublicLayout({
                 {children}
             </main>
             <Footer />
+            <ComparisonTray />
         </div>
     );
 }
