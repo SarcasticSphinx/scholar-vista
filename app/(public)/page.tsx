@@ -24,7 +24,6 @@
  */
 
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import {
     ArrowRight,
@@ -39,6 +38,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SearchAutocomplete } from "@/components/scholarship/search-autocomplete";
 import { ScholarshipCard } from "@/components/scholarship/scholarship-card";
 import { UniversityCard } from "@/components/university/university-card";
+import { HeroUniversityStack } from "@/components/home/hero-university-stack";
 import { EmptyState } from "@/components/shared/empty-state";
 import { featuredScholarships } from "@/lib/queries/scholarship";
 import { partnerUniversities } from "@/lib/queries/university";
@@ -99,7 +99,7 @@ export default async function HomePage() {
 
     return (
         <>
-            <HeroSection universities={universities} />
+            <HeroSection />
 
             <FeaturedSection scholarships={scholarships} />
 
@@ -114,11 +114,7 @@ export default async function HomePage() {
 /* Hero                                                                */
 /* ------------------------------------------------------------------ */
 
-function HeroSection({
-    universities,
-}: {
-    universities: Awaited<ReturnType<typeof partnerUniversities>>;
-}) {
+function HeroSection() {
     return (
         <section
             aria-labelledby="hero-heading"
@@ -169,101 +165,10 @@ function HeroSection({
                 </div>
 
                 <div className="relative hidden lg:block">
-                    <HeroUniversityStack universities={universities} />
+                    <HeroUniversityStack />
                 </div>
             </div>
         </section>
-    );
-}
-
-/**
- * Fanned "photo stack" of partner universities shown in the hero.
- *
- * Renders up to four university logo cards, each slightly rotated and
- * offset so they overlap like a stack of photos. Cards are painted
- * back-to-front (last item furthest back) with the front card upright and
- * fully opaque. Purely decorative, so the whole cluster is hidden from
- * assistive tech via `aria-hidden` — the same universities are announced
- * semantically in the Partner universities section below.
- */
-function HeroUniversityStack({
-    universities,
-}: {
-    universities: Awaited<ReturnType<typeof partnerUniversities>>;
-}) {
-    const cards = universities.slice(0, 4);
-
-    // Fallback to the previous single image if there are no partners to show.
-    if (cards.length === 0) {
-        return (
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border bg-card shadow-xl">
-                <Image
-                    src="https://picsum.photos/seed/scholarvista-hero/1200/1500"
-                    alt="University graduates celebrating their commencement"
-                    fill
-                    priority
-                    sizes="(min-width: 1024px) 40vw, 100vw"
-                    className="object-cover"
-                />
-            </div>
-        );
-    }
-
-    return (
-        <div
-            aria-hidden="true"
-            className="relative mx-auto aspect-[4/5] w-full max-w-md"
-        >
-            {cards.map((university, index) => {
-                // Front card (index 0) sits upright and centered; deeper cards
-                // peek out to alternating sides with increasing rotation,
-                // horizontal spread, and a slight downward drop.
-                const side = index === 0 ? 0 : index % 2 === 1 ? -1 : 1;
-                const rotate = side * (4 + index * 2);
-                const translateX = side * (30 + index * 8);
-                const translateY = index * 14;
-                const scale = 1 - index * 0.04;
-
-                return (
-                    <div
-                        key={university.id}
-                        className="absolute inset-0 flex items-center justify-center"
-                        style={{
-                            transform: `translate(${translateX}px, ${translateY}px) rotate(${rotate}deg) scale(${scale})`,
-                            zIndex: cards.length - index,
-                        }}
-                    >
-                        <div className="flex aspect-[4/5] w-4/5 flex-col overflow-hidden rounded-3xl border bg-card shadow-xl">
-                            <div className="flex flex-1 items-center justify-center bg-white p-8">
-                                {university.logo ? (
-                                    <Image
-                                        src={university.logo}
-                                        alt=""
-                                        width={220}
-                                        height={220}
-                                        priority={index === 0}
-                                        sizes="220px"
-                                        className="max-h-40 w-auto object-contain"
-                                    />
-                                ) : (
-                                    <span className="flex size-28 items-center justify-center rounded-2xl bg-muted text-5xl font-semibold uppercase text-muted-foreground">
-                                        {university.name.charAt(0)}
-                                    </span>
-                                )}
-                            </div>
-                            <div className="border-t bg-card px-5 py-4">
-                                <p className="truncate font-serif text-base font-semibold text-foreground">
-                                    {university.name}
-                                </p>
-                                <p className="truncate text-sm text-muted-foreground">
-                                    {university.country}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                );
-            })}
-        </div>
     );
 }
 

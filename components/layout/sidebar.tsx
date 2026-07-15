@@ -20,17 +20,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-    LayoutDashboard,
-    GraduationCap,
-    Building2,
-    Users,
-    FileText,
-    CheckSquare,
-    BarChart3,
-    Settings,
-    HelpCircle,
-} from "lucide-react";
 
 import {
     Sidebar as ShadSidebar,
@@ -42,19 +31,7 @@ import {
     SidebarMenu,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { SidebarNav, type DashboardNavItem } from "@/components/layout/sidebar-nav";
-
-const DASHBOARD_NAV: DashboardNavItem[] = [
-    { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-    { title: "Scholarships", url: "/dashboard/scholarships", icon: GraduationCap },
-    { title: "Universities", url: "/dashboard/universities", icon: Building2 },
-    { title: "Users", url: "/dashboard/users", icon: Users },
-    { title: "Applications", url: "/dashboard/applications", icon: FileText },
-    { title: "Approvals", url: "/dashboard/approvals", icon: CheckSquare },
-    { title: "Reports", url: "/dashboard/reports", icon: BarChart3 },
-    { title: "Settings", url: "/dashboard/settings", icon: Settings },
-    { title: "Help", url: "/dashboard/help", icon: HelpCircle },
-];
+import { SidebarNav } from "@/components/layout/sidebar-nav";
 
 export function Sidebar() {
     return (
@@ -90,7 +67,7 @@ export function Sidebar() {
             <SidebarContent>
                 <SidebarGroup>
                     <SidebarGroupContent>
-                        <SidebarNav items={DASHBOARD_NAV} />
+                        <SidebarNav />
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
