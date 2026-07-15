@@ -137,16 +137,31 @@ const SCHOLARSHIP_DETAIL_INCLUDE = {
   },
 } as const satisfies Prisma.ScholarshipInclude;
 
-const SCHOLARSHIP_CARD_INCLUDE = {
+/**
+ * Column-level `select` for card/listing surfaces. Unlike an `include`
+ * (which returns *every* scalar column of `Scholarship`), this pulls only
+ * the handful of fields `toCardDTO` actually reads. That keeps the big text
+ * columns (`description` up to 5000 chars, `requirements` 3000, `coverage`,
+ * `applicationLink`, …) out of listing queries entirely — meaningfully less
+ * data over the wire on every catalog render, which matters given the
+ * per-query network latency to the database.
+ */
+const SCHOLARSHIP_CARD_SELECT = {
+  id: true,
+  title: true,
+  category: true,
+  deadline: true,
+  stipend: true,
+  location: true,
   university: { select: { id: true, name: true, logo: true } },
-} as const satisfies Prisma.ScholarshipInclude;
+} as const satisfies Prisma.ScholarshipSelect;
 
 type ScholarshipDetailRow = Prisma.ScholarshipGetPayload<{
   include: typeof SCHOLARSHIP_DETAIL_INCLUDE;
 }>;
 
 type ScholarshipCardRow = Prisma.ScholarshipGetPayload<{
-  include: typeof SCHOLARSHIP_CARD_INCLUDE;
+  select: typeof SCHOLARSHIP_CARD_SELECT;
 }>;
 
 /**
@@ -366,7 +381,7 @@ async function listScholarshipsImpl({
     const pageIds = allIds.slice(skip, skip + pageSize);
     const fetched = await prisma.scholarship.findMany({
       where: { id: { in: pageIds } },
-      include: SCHOLARSHIP_CARD_INCLUDE,
+      select: SCHOLARSHIP_CARD_SELECT,
     });
 
     // Re-order to match `pageIds` (Prisma does not preserve `in` order).
@@ -384,7 +399,7 @@ async function listScholarshipsImpl({
       orderBy,
       skip,
       take: pageSize,
-      include: SCHOLARSHIP_CARD_INCLUDE,
+      select: SCHOLARSHIP_CARD_SELECT,
     });
     ratingMap = await ratingsForIds(rows.map((r) => r.id));
   }
@@ -482,7 +497,7 @@ export async function relatedScholarships(
     },
     orderBy: { createdAt: "desc" },
     take: limit,
-    include: SCHOLARSHIP_CARD_INCLUDE,
+    select: SCHOLARSHIP_CARD_SELECT,
   });
   const ratings = await ratingsForIds(rows.map((r) => r.id));
   return rows.map((r) => toCardDTO(r, ratings));
@@ -499,7 +514,7 @@ export const featuredScholarships = cached(
       where: { isApproved: true },
       orderBy: { createdAt: "desc" },
       take: limit,
-      include: SCHOLARSHIP_CARD_INCLUDE,
+      select: SCHOLARSHIP_CARD_SELECT,
     });
     const ratings = await ratingsForIds(rows.map((r) => r.id));
     return rows.map((r) => toCardDTO(r, ratings));
@@ -612,7 +627,7 @@ export async function scholarshipsByUniversity(
     orderBy: { deadline: "asc" },
     skip,
     take: pageSize,
-    include: SCHOLARSHIP_CARD_INCLUDE,
+    select: SCHOLARSHIP_CARD_SELECT,
   });
   const ratings = await ratingsForIds(rows.map((r) => r.id));
 

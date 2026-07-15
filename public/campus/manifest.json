@@ -1,0 +1,92 @@
+{
+  "univ-oxford": {
+    "name": "University of Oxford",
+    "file": "univ-oxford.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/1_oxford_aerial_panorama_2016.jpg/960px-1_oxford_aerial_panorama_2016.jpg",
+    "source": "body-photo:1_oxford_aerial_panorama_2016.jpg"
+  },
+  "univ-harvard": {
+    "name": "Harvard University",
+    "file": "univ-harvard.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/John_Adams_Portrait.jpg/960px-John_Adams_Portrait.jpg",
+    "source": "body-photo:John_Adams_Portrait.jpg"
+  },
+  "univ-cambridge": {
+    "name": "University of Cambridge",
+    "file": "univ-cambridge.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Cmglee_Cambridge_Trinity_College_Great_Court.jpg/960px-Cmglee_Cambridge_Trinity_College_Great_Court.jpg",
+    "source": "body-photo:Cmglee_Cambridge_Trinity_College_Great_Court.jpg"
+  },
+  "univ-stanford": {
+    "name": "Stanford University",
+    "file": "univ-stanford.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Stanford_Memorial_Church_Interior_2.jpg",
+    "source": "body-photo:Stanford_Memorial_Church_Interior_2.jpg"
+  },
+  "univ-ethz": {
+    "name": "ETH Zurich",
+    "file": "univ-ethz.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/ETH_Z%C3%BCrich_-_Hauptgeb%C3%A4ude_-_Unispital_2012-07-30_07-57-03_ShiftN.jpg/960px-ETH_Z%C3%BCrich_-_Hauptgeb%C3%A4ude_-_Unispital_2012-07-30_07-57-03_ShiftN.jpg",
+    "source": "lead-image"
+  },
+  "univ-nus": {
+    "name": "National University of Singapore",
+    "file": "univ-nus.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Prime_Minister_Lee_Kuan_Yew_of_Singapore_Making_a_Toast_at_a_State_Dinner_Held_in_His_Honor%2C_1975.jpg/960px-Prime_Minister_Lee_Kuan_Yew_of_Singapore_Making_a_Toast_at_a_State_Dinner_Held_in_His_Honor%2C_1975.jpg",
+    "source": "body-photo:Prime_Minister_Lee_Kuan_Yew_of_Singapore_Making_a_Toast_at_a_State_Dinner_Held_in_His_Honor,_1975.jpg"
+  },
+  "univ-melbourne": {
+    "name": "University of Melbourne",
+    "file": "univ-melbourne.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/RUEDA_DE_PRENSA_CONJUNTA_ENTRE_CANCILLER_RICARDO_PATI%C3%91O_Y_JULIAN_ASSANGE_%28cropped%29.jpg/960px-RUEDA_DE_PRENSA_CONJUNTA_ENTRE_CANCILLER_RICARDO_PATI%C3%91O_Y_JULIAN_ASSANGE_%28cropped%29.jpg",
+    "source": "body-photo:RUEDA_DE_PRENSA_CONJUNTA_ENTRE_CANCILLER_RICARDO_PATI\u00d1O_Y_JULIAN_ASSANGE_(cropped).jpg"
+  },
+  "univ-tsinghua": {
+    "name": "Tsinghua University",
+    "file": "univ-tsinghua.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/TsinghuaUniversitypic10.jpg/960px-TsinghuaUniversitypic10.jpg",
+    "source": "body-photo:TsinghuaUniversitypic10.jpg"
+  },
+  "univ-toronto": {
+    "name": "University of Toronto",
+    "file": "univ-toronto.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Toronto_IMG_1363_%281879666025%29.jpg/960px-Toronto_IMG_1363_%281879666025%29.jpg",
+    "source": "body-photo:Toronto_IMG_1363_(1879666025).jpg"
+  },
+  "univ-tum": {
+    "name": "Technical University of Munich",
+    "file": "univ-tum.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Polytechnische_Schule_Muenchen.jpg",
+    "source": "body-photo:Polytechnische_Schule_Muenchen.jpg"
+  },
+  "univ-leiden": {
+    "name": "Leiden University",
+    "file": "univ-leiden.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/William_the_Silent_16th_century.jpg/960px-William_the_Silent_16th_century.jpg",
+    "source": "body-photo:William_the_Silent_16th_century.jpg"
+  },
+  "univ-kuleuven": {
+    "name": "KU Leuven",
+    "file": "univ-kuleuven.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Souvenir_25_eme_anniversaire_de_la_Fondation_Universit%C3%A9_catholique_de_Louvain_novembre_1859.jpg",
+    "source": "body-photo:Souvenir_25_eme_anniversaire_de_la_Fondation_Universit\u00e9_catholique_de_Louvain_novembre_1859.jpg"
+  },
+  "univ-auckland": {
+    "name": "University of Auckland",
+    "file": "univ-auckland.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/University_of_Auckland_Clock_Tower.jpg/960px-University_of_Auckland_Clock_Tower.jpg",
+    "source": "lead-image"
+  },
+  "univ-sciencespo": {
+    "name": "Sciences Po",
+    "file": "univ-sciencespo.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Paris_Institute_of_Political_Studies.png",
+    "source": "lead-image"
+  },
+  "univ-uct": {
+    "name": "University of Cape Town",
+    "file": "univ-uct.jpg",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/UCT_Cape_Town.jpg/960px-UCT_Cape_Town.jpg",
+    "source": "body-photo:UCT_Cape_Town.jpg"
+  }
+}

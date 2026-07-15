@@ -281,16 +281,16 @@ export default async function ScholarshipDetailPage({
                         <Image
                             src={scholarship.university.logo}
                             alt={`${scholarship.university.name} logo`}
-                            width={96}
-                            height={96}
+                            width={128}
+                            height={128}
                             priority
-                            sizes="96px"
-                            className="size-20 shrink-0 rounded-lg bg-background object-contain ring-1 ring-border md:size-24"
+                            sizes="128px"
+                            className="size-28 shrink-0 rounded-lg bg-white object-contain p-2 ring-1 ring-border md:size-32"
                         />
                     ) : (
                         <span
                             aria-hidden="true"
-                            className="flex size-20 shrink-0 items-center justify-center rounded-lg bg-muted text-2xl font-semibold uppercase text-muted-foreground ring-1 ring-border md:size-24"
+                            className="flex size-28 shrink-0 items-center justify-center rounded-lg bg-muted text-3xl font-semibold uppercase text-muted-foreground ring-1 ring-border md:size-32"
                         >
                             {scholarship.university.name.charAt(0)}
                         </span>

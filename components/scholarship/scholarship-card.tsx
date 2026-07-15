@@ -121,17 +121,17 @@ export function ScholarshipCard({
                         <Image
                             src={scholarship.university.logo}
                             alt={`${scholarship.university.name} logo`}
-                            width={24}
-                            height={24}
-                            className="size-6 rounded-sm object-contain"
+                            width={40}
+                            height={40}
+                            className="size-10 shrink-0 rounded-md bg-white object-contain p-1 ring-1 ring-border"
                             priority={priority}
                             loading={priority ? undefined : "lazy"}
-                            sizes="24px"
+                            sizes="40px"
                         />
                     ) : (
                         <span
                             aria-hidden="true"
-                            className="flex size-6 items-center justify-center rounded-sm bg-muted text-[10px] font-semibold uppercase text-muted-foreground"
+                            className="flex size-10 shrink-0 items-center justify-center rounded-md bg-muted text-sm font-semibold uppercase text-muted-foreground ring-1 ring-border"
                         >
                             {scholarship.university.name.charAt(0)}
                         </span>

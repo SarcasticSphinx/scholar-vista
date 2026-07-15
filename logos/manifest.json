@@ -1,0 +1,122 @@
+{
+  "univ-mit": {
+    "name": "Massachusetts Institute of Technology",
+    "file": "univ-mit.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/MIT_2023_red_logo.svg/500px-MIT_2023_red_logo.svg.png",
+    "source": "infobox:MIT 2023 red logo.svg"
+  },
+  "univ-oxford": {
+    "name": "University of Oxford",
+    "file": "univ-oxford.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/University_of_Oxford.svg/500px-University_of_Oxford.svg.png",
+    "source": "infobox:University of Oxford.svg"
+  },
+  "univ-harvard": {
+    "name": "Harvard University",
+    "file": "univ-harvard.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Harvard_University_logo.svg/500px-Harvard_University_logo.svg.png",
+    "source": "infobox:Harvard University logo.svg"
+  },
+  "univ-cambridge": {
+    "name": "University of Cambridge",
+    "file": "univ-cambridge.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/University_of_Cambridge_logo.svg/500px-University_of_Cambridge_logo.svg.png",
+    "source": "infobox:University of Cambridge logo.svg"
+  },
+  "univ-stanford": {
+    "name": "Stanford University",
+    "file": "univ-stanford.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Stanford_wordmark_%282012%29.svg/500px-Stanford_wordmark_%282012%29.svg.png",
+    "source": "infobox:Stanford wordmark (2012).svg"
+  },
+  "univ-ethz": {
+    "name": "ETH Zurich",
+    "file": "univ-ethz.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/ETH_Z%C3%BCrich_Logo_black.svg/500px-ETH_Z%C3%BCrich_Logo_black.svg.png",
+    "source": "infobox:ETH Z\u00fcrich Logo black.svg"
+  },
+  "univ-nus": {
+    "name": "National University of Singapore",
+    "file": "univ-nus.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9b/NationalUniversityofSingapore.svg/500px-NationalUniversityofSingapore.svg.png",
+    "source": "infobox:NationalUniversityofSingapore.svg"
+  },
+  "univ-tsinghua": {
+    "name": "Tsinghua University",
+    "file": "univ-tsinghua.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/7/78/Tsinghua_University_logo_and_wordmark_in_Chinese_and_English_characters.svg/500px-Tsinghua_University_logo_and_wordmark_in_Chinese_and_English_characters.svg.png",
+    "source": "infobox:Tsinghua University logo and wordmark in Chinese and English characters.svg"
+  },
+  "univ-toronto": {
+    "name": "University of Toronto",
+    "file": "univ-toronto.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/b/b5/UofT_logo.svg/500px-UofT_logo.svg.png",
+    "source": "infobox:UofT logo.svg"
+  },
+  "univ-melbourne": {
+    "name": "University of Melbourne",
+    "file": "univ-melbourne.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/5/50/The_University_of_Melbourne_Logo.svg/500px-The_University_of_Melbourne_Logo.svg.png",
+    "source": "infobox:The University of Melbourne Logo.svg"
+  },
+  "univ-tum": {
+    "name": "Technical University of Munich",
+    "file": "univ-tum.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/TU_Muenchen_Logo.svg/500px-TU_Muenchen_Logo.svg.png",
+    "source": "infobox:TU Muenchen Logo.svg"
+  },
+  "univ-anu": {
+    "name": "Australian National University",
+    "file": "univ-anu.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Australian_National_University_%28emblem%29.svg/500px-Australian_National_University_%28emblem%29.svg.png",
+    "source": "infobox:ANU logo.svg"
+  },
+  "univ-snu": {
+    "name": "Seoul National University",
+    "file": "univ-snu.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Seoul_national_university_logotype.svg/500px-Seoul_national_university_logotype.svg.png",
+    "source": "infobox:Seoul national university logotype.svg"
+  },
+  "univ-tokyo": {
+    "name": "University of Tokyo",
+    "file": "univ-tokyo.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/University_of_Tokyo_logo_%282024%29.svg/500px-University_of_Tokyo_logo_%282024%29.svg.png",
+    "source": "infobox:University of Tokyo logo (2024).svg"
+  },
+  "univ-heidelberg": {
+    "name": "Heidelberg University",
+    "file": "univ-heidelberg.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Ruprecht-Karls-Universit%C3%A4t_Heidelberg_Logo.svg/500px-Ruprecht-Karls-Universit%C3%A4t_Heidelberg_Logo.svg.png",
+    "source": "infobox:Ruprecht-Karls-Universit\u00e4t Heidelberg Logo.svg"
+  },
+  "univ-leiden": {
+    "name": "Leiden University",
+    "file": "univ-leiden.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/UniversiteitLeidenLogo.svg/500px-UniversiteitLeidenLogo.svg.png",
+    "source": "infobox:UniversiteitLeidenLogo.svg"
+  },
+  "univ-kuleuven": {
+    "name": "KU Leuven",
+    "file": "univ-kuleuven.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/KU_Leuven_logo.svg/500px-KU_Leuven_logo.svg.png",
+    "source": "infobox:KU Leuven logo.svg"
+  },
+  "univ-auckland": {
+    "name": "University of Auckland",
+    "file": "univ-auckland.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d9/University_of_Auckland_logo.svg/500px-University_of_Auckland_logo.svg.png",
+    "source": "infobox:University of Auckland logo.svg"
+  },
+  "univ-sciencespo": {
+    "name": "Sciences Po",
+    "file": "univ-sciencespo.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Logo_Sciences_Po.svg/500px-Logo_Sciences_Po.svg.png",
+    "source": "infobox:Logo Sciences Po.svg"
+  },
+  "univ-uct": {
+    "name": "University of Cape Town",
+    "file": "univ-uct.png",
+    "sourceUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/d/db/University_of_Cape_Town_banner.svg/500px-University_of_Cape_Town_banner.svg.png",
+    "source": "infobox:University of Cape Town banner.svg"
+  }
+}

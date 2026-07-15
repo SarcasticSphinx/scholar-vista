@@ -182,7 +182,7 @@ async function main() {
     {
       id: "univ-mit",
       name: "Massachusetts Institute of Technology",
-      logo: "https://picsum.photos/seed/mit/200/200",
+      logo: "/logos/univ-mit.png",
       contactEmail: "admissions@mit.edu",
       website: "https://www.mit.edu",
       description:
@@ -198,7 +198,7 @@ async function main() {
     {
       id: "univ-oxford",
       name: "University of Oxford",
-      logo: "https://picsum.photos/seed/oxford/200/200",
+      logo: "/logos/univ-oxford.png",
       contactEmail: "admissions@ox.ac.uk",
       website: "https://www.ox.ac.uk",
       description:
@@ -214,7 +214,7 @@ async function main() {
     {
       id: "univ-harvard",
       name: "Harvard University",
-      logo: "https://picsum.photos/seed/harvard/200/200",
+      logo: "/logos/univ-harvard.png",
       contactEmail: "admissions@harvard.edu",
       website: "https://www.harvard.edu",
       description:
@@ -230,7 +230,7 @@ async function main() {
     {
       id: "univ-cambridge",
       name: "University of Cambridge",
-      logo: "https://picsum.photos/seed/cambridge/200/200",
+      logo: "/logos/univ-cambridge.png",
       contactEmail: "admissions@cam.ac.uk",
       website: "https://www.cam.ac.uk",
       description:
@@ -246,7 +246,7 @@ async function main() {
     {
       id: "univ-stanford",
       name: "Stanford University",
-      logo: "https://picsum.photos/seed/stanford/200/200",
+      logo: "/logos/univ-stanford.png",
       contactEmail: "admission@stanford.edu",
       website: "https://www.stanford.edu",
       description:
@@ -262,7 +262,7 @@ async function main() {
     {
       id: "univ-ethz",
       name: "ETH Zurich",
-      logo: "https://picsum.photos/seed/ethz/200/200",
+      logo: "/logos/univ-ethz.png",
       contactEmail: "admissions@ethz.ch",
       website: "https://ethz.ch",
       description:
@@ -278,7 +278,7 @@ async function main() {
     {
       id: "univ-nus",
       name: "National University of Singapore",
-      logo: "https://picsum.photos/seed/nus/200/200",
+      logo: "/logos/univ-nus.png",
       contactEmail: "admissions@nus.edu.sg",
       website: "https://www.nus.edu.sg",
       description:
@@ -294,7 +294,7 @@ async function main() {
     {
       id: "univ-melbourne",
       name: "University of Melbourne",
-      logo: "https://picsum.photos/seed/melbourne/200/200",
+      logo: "/logos/univ-melbourne.png",
       contactEmail: "admissions@unimelb.edu.au",
       website: "https://www.unimelb.edu.au",
       description:
@@ -310,7 +310,7 @@ async function main() {
     {
       id: "univ-tsinghua",
       name: "Tsinghua University",
-      logo: "https://picsum.photos/seed/tsinghua/200/200",
+      logo: "/logos/univ-tsinghua.png",
       contactEmail: "admissions@tsinghua.edu.cn",
       website: "https://www.tsinghua.edu.cn",
       description:
@@ -326,7 +326,7 @@ async function main() {
     {
       id: "univ-toronto",
       name: "University of Toronto",
-      logo: "https://picsum.photos/seed/toronto/200/200",
+      logo: "/logos/univ-toronto.png",
       contactEmail: "admissions@utoronto.ca",
       website: "https://www.utoronto.ca",
       description:
@@ -342,7 +342,7 @@ async function main() {
     {
       id: "univ-tum",
       name: "Technical University of Munich",
-      logo: "https://picsum.photos/seed/tum/200/200",
+      logo: "/logos/univ-tum.png",
       contactEmail: "admissions@tum.de",
       website: "https://www.tum.de",
       description:
@@ -358,7 +358,7 @@ async function main() {
     {
       id: "univ-anu",
       name: "Australian National University",
-      logo: "https://picsum.photos/seed/anu/200/200",
+      logo: "/logos/univ-anu.png",
       contactEmail: "admissions@anu.edu.au",
       website: "https://www.anu.edu.au",
       description:
@@ -374,7 +374,7 @@ async function main() {
     {
       id: "univ-snu",
       name: "Seoul National University",
-      logo: "https://picsum.photos/seed/snu/200/200",
+      logo: "/logos/univ-snu.png",
       contactEmail: "admissions@snu.ac.kr",
       website: "https://www.snu.ac.kr",
       description:
@@ -390,7 +390,7 @@ async function main() {
     {
       id: "univ-tokyo",
       name: "University of Tokyo",
-      logo: "https://picsum.photos/seed/tokyo/200/200",
+      logo: "/logos/univ-tokyo.png",
       contactEmail: "admissions@u-tokyo.ac.jp",
       website: "https://www.u-tokyo.ac.jp",
       description:
@@ -406,7 +406,7 @@ async function main() {
     {
       id: "univ-heidelberg",
       name: "Heidelberg University",
-      logo: "https://picsum.photos/seed/heidelberg/200/200",
+      logo: "/logos/univ-heidelberg.png",
       contactEmail: "admissions@uni-heidelberg.de",
       website: "https://www.uni-heidelberg.de",
       description:
@@ -422,7 +422,7 @@ async function main() {
     {
       id: "univ-leiden",
       name: "Leiden University",
-      logo: "https://picsum.photos/seed/leiden/200/200",
+      logo: "/logos/univ-leiden.png",
       contactEmail: "admissions@leidenuniv.nl",
       website: "https://www.universiteitleiden.nl",
       description:
@@ -438,7 +438,7 @@ async function main() {
     {
       id: "univ-kuleuven",
       name: "KU Leuven",
-      logo: "https://picsum.photos/seed/kuleuven/200/200",
+      logo: "/logos/univ-kuleuven.png",
       contactEmail: "admissions@kuleuven.be",
       website: "https://www.kuleuven.be",
       description:
@@ -454,7 +454,7 @@ async function main() {
     {
       id: "univ-auckland",
       name: "University of Auckland",
-      logo: "https://picsum.photos/seed/auckland/200/200",
+      logo: "/logos/univ-auckland.png",
       contactEmail: "admissions@auckland.ac.nz",
       website: "https://www.auckland.ac.nz",
       description:
@@ -470,7 +470,7 @@ async function main() {
     {
       id: "univ-sciencespo",
       name: "Sciences Po",
-      logo: "https://picsum.photos/seed/sciencespo/200/200",
+      logo: "/logos/univ-sciencespo.png",
       contactEmail: "admissions@sciencespo.fr",
       website: "https://www.sciencespo.fr",
       description:
@@ -486,7 +486,7 @@ async function main() {
     {
       id: "univ-uct",
       name: "University of Cape Town",
-      logo: "https://picsum.photos/seed/uct/200/200",
+      logo: "/logos/univ-uct.png",
       contactEmail: "admissions@uct.ac.za",
       website: "https://www.uct.ac.za",
       description:
